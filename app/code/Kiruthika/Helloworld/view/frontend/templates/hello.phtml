@@ -1,0 +1,61 @@
+<?php
+/*
+@var \Kiruthika\Helloworld\Block\Hello $block
+ */
+?>
+<h1><?= $block->getText(); ?></h1>
+<form action="<?= $block->getAddUrl(); ?>" method="post">
+    <div class="form-group">
+        <label>Name</label>
+        <input type="text" name="name" class="form-control">
+    </div>  
+    <div class="form-group">
+        <label>Description</label>
+        <input type="text" name="description" class="form-control">
+    </div> 
+    <div class="form-group">
+        <input type="submit" name="submit" class="btn btn-success" value="ADD">
+    </div> 
+</form>
+<?php 
+
+$cars = $block->getCarCollection();
+if(count($cars) > 0){
+
+    ?>
+   <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Created At</th>
+            <th>Updated At</th>
+            <th>Action</th>
+        </tr>
+        <?php
+        foreach ($cars as $car) :
+            $data = $car->getData(); 
+        ?>
+        <tr>
+            <td><?= $data['id']; ?></td>
+            <td><?= $data['name']; ?></td>
+            <td><?= $data['description']; ?></td>
+            <td><?= $data['created_at']; ?></td>
+            <td><?= $data['updated_at']; ?></td>
+            <td>
+            <a href="<?= $block->getUrl('helloworld/car/edit').'id/'.$data['id']; ?>" class="action primary">Edit</a>
+            <a href="<?= $block->getUrl('helloworld/car/delete').'id/'.$data['id']; ?>" class="action danger">Delete</a>
+
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </table>
+
+    <?php
+
+} else{
+    echo "No Record Found.";
+}
+?>
+
+
